@@ -1,11 +1,10 @@
 function screenRouter(list: any, name: string) {
-    let array = [];
-   let  brr = list.filter(item => {
-        return item.meta.role.some(v=>{
-            return v==name;
+    let brr = list.filter((item: any) => {
+        return item.meta.role.some((v: any) => {
+            return v == name;
         })
     });
-    return array;
+    return brr;
 }
 export default {
     screenRouter

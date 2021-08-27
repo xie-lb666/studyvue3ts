@@ -1,10 +1,10 @@
 export const Roles = [
     {
-        text: "超级管理员",
-        name: "cj"
+        text: "管理员",
+        name: "admin"
     },
     {
-        text: "管理员",
-        name: "gly"
+        text: "普通人员",
+        name: "ordinary"
     },
 ]

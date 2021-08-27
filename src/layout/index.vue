@@ -1,6 +1,6 @@
 
 <template>
-  <el-container style="height: 650px;   ">
+  <el-container style="height: 650px">
     <el-aside :width="asideWidth" style="background-color: rgb(238, 241, 246)">
       <h1>标题 <i class="el-icon-arrow-left" @click="closeAside"></i></h1>
       <el-menu
@@ -10,13 +10,12 @@
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-submenu index="1" v-for="(item, i) in data" :key="i">
+        <el-submenu index="1" v-for="(item, i) in routerList" :key="i">
           <template #title
-            ><i :class="item.icon"></i
-            ><span>{{ item.name }}</span></template
+            ><i :class="item.icon"></i><span>{{ item.name }}</span></template
           >
           <el-menu-item v-for="(v, i) in item.children" :key="i" :index="v.path"
-            ><i :class="item.icon"></i>{{ v.name }}</el-menu-item
+            ><i :class="v.meta.icon"></i>{{ v.meta.title }}</el-menu-item
           >
         </el-submenu>
       </el-menu>
@@ -45,44 +44,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { mapGetters } from "vuex";
 export default defineComponent({
   name: "Layout",
-  computed: {},
+  computed: { ...mapGetters(["routerList"]) },
   setup() {
-    const data = [
-      {
-        name: "导航一",
-        icon: "el-icon-message",
-        children: [
-          {
-            name: "新建文章",
-            icon: "el-icon-message",
-            path: "/article/create",
-          },
-          {
-            name: "文章列表",
-            icon: "el-icon-message",
-            path: "/article/list",
-          },
-        ],
-      },
-      {
-        name: "抽奖",
-        icon: "el-icon-message",
-        children: [
-          {
-            name: "抽奖",
-            icon: "el-icon-message",
-            path: "/luckydraw",
-          },
-          {
-            name: "设置商品",
-            icon: "el-icon-message",
-            path: "/luckydraw/edit",
-          },
-        ],
-      },
-    ];
     let collapse = ref(false);
     let asideWidth = ref("260px");
     const closeAside = () => {
@@ -93,22 +59,20 @@ export default defineComponent({
         asideWidth.value = "260px";
       }
     };
-    const handleOpen = (key, keyPath) => {
-    };
-    const handleClose = (key, keyPath) => {
-    };
-    return { data, closeAside, asideWidth, collapse, handleOpen, handleClose};
+    const handleOpen = (key, keyPath) => {};
+    const handleClose = (key, keyPath) => {};
+    return {  closeAside, asideWidth, collapse, handleOpen, handleClose };
   },
 });
 </script>
 
 <style scoped>
-  .page{
-    padding: 20px;
-    height: 680px;
-    padding-bottom: 100px;
-    overflow: hidden;
-  }
+.page {
+  padding: 20px;
+  height: 680px;
+  padding-bottom: 100px;
+  overflow: hidden;
+}
 .el-header {
   background-color: #b3c0d1;
   color: #333;

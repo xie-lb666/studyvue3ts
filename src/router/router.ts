@@ -1,7 +1,5 @@
-import Home from "../views/Home/Home.vue";
 import store from '../store/index';
 import AsyncRoutes from './asyncRoutes';
-import Layout from '../layout/index.vue';
 import permissions from "./permissions";
 import {
     Roles
@@ -20,11 +18,18 @@ router.beforeEach((to, from, next) => {
             })
         }
     } else {
+        /**
+         * 控制系统初次渲染动态添加路由
+         * 获取登录账号的权限，
+         */
         let routeModuleName = Roles.filter((res) => {
             return res.name == store.state.user.role;
         })[0].name;
         // 已经登录，显示对应权限的页面
         loadMenus(routeModuleName, next, to);
+        if (to.matched.length === 0) {
+            next('/404') // 判断此跳转路由的来源路由是否存在，存在的情况跳转到来源路由，否则跳转到404页面
+        }
         next();
     }
 })
@@ -36,81 +41,28 @@ router.beforeEach((to, from, next) => {
  * @param to 
  * @returns 
  */
-export const loadMenus = async (module, next, to) => {
-    // console.log("获取传递过来的权限名字", module);
-    // console.log("获取原来的路由", router.getRoutes());
-    // console.log("添加路由的方法", AsyncRoutes, router);
-
-    let list = {
-        path: "/",
-        name: "Home",
-        component: Layout,
-        children: [
-            {
-                path: "/article/create",
-                name: "cjarticle",
-                component: () => import('../views/CreateArticle.vue'),
-                meta: {
-                    icon: 'home',
-                    breadcrumb: true,
-                    title: '超级管理员',
-                    affix: true,
-                    noCache: true
-                }
-            }, {
-                path: "/article/list",
-                name: "cjarticlelist",
-                component: () => import('../views/ListArticle.vue'),
-                meta: {
-                    icon: 'home',
-                    breadcrumb: true,
-                    title: '超级管理员',
-                    affix: true,
-                    noCache: true
-                }
-            },
-            {
-                path: "/article/edit",
-                name: "cjarticleedit",
-                component: () => import('../views/EditArticle.vue'),
-                meta: {
-                    icon: 'home',
-                    breadcrumb: true,
-                    title: '超级管理员',
-                    affix: true,
-                    noCache: true
-                }
-            },{
-                path: "/luckydraw",
-                name: "luckydraw",
-                component: () => import('../views/LuckyDraw/LuckyDraw.vue'),
-                meta: {
-                    icon: 'home',
-                    breadcrumb: true,
-                    title: '抽奖',
-                    affix: true,
-                    noCache: true
-                }
-            },{
-                path: "/luckydraw/edit",
-                name: "luckydrawedit",
-                component: () => import('../views/LuckyEdit/LuckyEdit.vue'),
-                meta: {
-                    icon: 'home',
-                    breadcrumb: true,
-                    title: '抽奖设置',
-                    affix: true,
-                    noCache: true
-                }
-            },]
-    };
-    router.addRoute(list) //
-    let  perlist = permissions.screenRouter(AsyncRoutes,module);
-    // console.log(router.getRoutes());
-    AsyncRoutes.forEach(item => {
-        // console.log(item);
-        router.addRoute(item) //
+export const loadMenus = async (module: any, next: any, to: any) => {
+    /**
+     * 获取所有的路由
+     * 将路由与自身的权限对比，得到自己的路由     permissions.screenRouter
+     * 动态添加对应的路由   并存store   方便渲染侧边导航
+     * module ：自身的权限
+     * router.getRoutes()   ：获取所有的路由
+     * router.addRoute({})  ：添加路由
+     */
+    let routerList = permissions.screenRouter(AsyncRoutes, module);
+    routerList.forEach((item: any) => {
+        router.addRoute(item)
     })
-    // console.log(router.getRoutes());
-    return AsyncRoutes;
+    let setRouterList = routerList.map((item: any) => {
+        console.log(item);
+        return {
+            path: item.path,
+            icon: item.meta.icon,
+            name: item.meta.title,
+            children: item.children
+        }
+    })
+    store.commit('app/SETROUTERLIST', setRouterList);
+    return routerList;
 }

@@ -1,60 +1,29 @@
-import Layout from '../../layout/index.vue'
+import Layout from '../../layout/index.vue';
 const routes = {
-    path: "/",
-    name: "Home",
+    path: '/console',
+    name: 'console',
     component: Layout,
+    redirect: '/console/index',
     meta: {
-        auth: true, //登录才能进去的
-        name: '首页',
+        icon: 'home',
+        breadcrumb: true,
+        title: '超级管理员',
+        affix: true,
+        noCache: true,
+        role:['admin']
     },
     children: [{
-        path: "/cj/adminone",
-        name: "cjadminone",
-        component: () => import('../views/adminone/index.vue'),
+        path: "/console/index",
+        name: "consoleindex",
+        component: () => import('../../views/LuckyDraw/LuckyDraw.vue'),
         meta: {
             icon: 'home',
             breadcrumb: true,
-            title: '超级管理员',
-            affix: true,
-            noCache: true
-        }
-    },
-    {
-        path: "/article/create",
-        name: "cjarticle",
-        component: () => import('../views/CreateArticle.vue'),
-        meta: {
-            icon: 'home',
-            breadcrumb: true,
-            title: '超级管理员',
-            affix: true,
-            noCache: true
-        }
-    },
-    {
-        path: "/article/list",
-        name: "cjarticlelist",
-        component: () => import('../views/ListArticle.vue'),
-        meta: {
-            icon: 'home',
-            breadcrumb: true,
-            title: '超级管理员',
-            affix: true,
-            noCache: true
-        }
-    },
-    {
-        path: "/article/edit",
-        name: "cjarticleedit",
-        component: () => import('../views/EditArticle.vue'),
-        meta: {
-            icon: 'home',
-            breadcrumb: true,
-            title: '超级管理员',
+            title: '抽奖',
             affix: true,
             noCache: true
         }
     },
     ]
-};
+}
 export default routes;

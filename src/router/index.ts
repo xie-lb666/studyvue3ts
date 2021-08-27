@@ -1,11 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home/Home.vue";
-import store from '../store/index';
-import AsyncRoutes from './asyncRoutes';
 import Layout from '../layout/index.vue';
-import {
-    Roles
-} from "../util/const";
 // 基本的路由
 const routes = [
     {
@@ -28,7 +22,7 @@ const routes = [
         path: "/404",
         name: "404",
         component: () => import("../views/errorPage/404.vue"),
-    },
+    }
 ];
 const router = createRouter({
     history: createWebHashHistory(),

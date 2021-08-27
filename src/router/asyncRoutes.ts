@@ -1,3 +1,3 @@
-import admin from './modules/admin';
-import user from './modules/user';
-export default [admin, user];
+import prize from './modules/prize';
+import console from './modules/console';
+export default [prize,console];

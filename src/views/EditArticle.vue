@@ -54,7 +54,7 @@ export default defineComponent({
             }
           })
           .catch((err) => {
-            // console.log(err);
+
           });
       },
       getData: (id: any) => {
@@ -68,7 +68,6 @@ export default defineComponent({
             }
           })
           .catch((err) => {
-            // console.log(err);
           });
       },
     });

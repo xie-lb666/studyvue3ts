@@ -129,7 +129,6 @@ export default defineComponent({
             }
           })
           .catch((err) => {
-            // console.log(err);
           });
       } else {
         ElMessage.error("请设置完整的百分比");

@@ -135,7 +135,6 @@ export default defineComponent({
             // 停下来 , 找到商品了
             if (i == data.type) {
               winData.value = data;
-              console.log(winData);
               clearInterval(timeIdTwo);
               flag.value = true;
               dialogWinVisible.value = true;

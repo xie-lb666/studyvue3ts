@@ -23,10 +23,14 @@ router.beforeEach((to, from, next) => {
          * 获取登录账号的权限，
          */
         let routeModuleName = Roles.filter((res) => {
-            return res.name == store.state.user.role;
+            let role = store.state.user.user.role;
+            return res.name == role;
         })[0].name;
         // 已经登录，显示对应权限的页面
-        loadMenus(routeModuleName, next, to);
+        if (store.state.app.loadMenus) {
+            store.dispatch('app/updateLoadMenus')
+            loadMenus(routeModuleName, next, to);
+        }
         if (to.matched.length === 0) {
             next('/404') // 判断此跳转路由的来源路由是否存在，存在的情况跳转到来源路由，否则跳转到404页面
         }
@@ -55,7 +59,6 @@ export const loadMenus = async (module: any, next: any, to: any) => {
         router.addRoute(item)
     })
     let setRouterList = routerList.map((item: any) => {
-        console.log(item);
         return {
             path: item.path,
             icon: item.meta.icon,

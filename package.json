@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons": "0.0.11",
     "axios": "^0.21.1",
     "element-plus": "^1.0.2-beta.70",
     "js-cookie": "^3.0.1",

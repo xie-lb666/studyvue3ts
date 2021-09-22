@@ -1,37 +1,31 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Layout from '../layout/index.vue';
 // 基本的路由
 const routes = [
     {
-    path: '/web',
-    name: 'web',
-    component: () => import('../views/web/web.vue')
-},
-{
-    path: "/",
-    name: "Home",
-    component: Layout,
-    // redirect: '/web',
-    meta: {
-        auth: true, //登录才能进去的
-        name: '首页',
+        path: "/",
+        name: "Home",
+        component: Layout,
+        meta: {
+            auth: true, //登录才能进去的
+            name: '首页',
+        },
+        children: [
+        ]
     },
-    children: [
-    ]
-},
-{
-    path: "/login",
-    name: "login",
-    component: () => import("../views/Login.vue"),
-},
-{
-    path: "/404",
-    name: "404",
-    component: () => import("../views/errorPage/404.vue"),
-}
+    {
+        path: "/login",
+        name: "login",
+        component: () => import("../views/Login.vue"),
+    },
+    {
+        path: "/404",
+        name: "404",
+        component: () => import("../views/errorPage/404.vue"),
+    },
 ];
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
 });
 /**

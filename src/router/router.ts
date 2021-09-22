@@ -7,12 +7,14 @@ import {
 import router from './index';
 router.beforeEach((to, from, next) => {
     if (!store.state.user.token) {
-        // 未登录
+        // 未登录  以及判断是不是需要权限才能进入的
         if (to.matched.length > 0 && !to.matched.some(record => {
             return record.meta.auth;
         })) {
+            // console.log(router.getRoutes())
             next();
         } else {
+            // console.log(router.getRoutes())
             next({
                 path: '/login'
             })
@@ -30,7 +32,7 @@ router.beforeEach((to, from, next) => {
         if (store.state.app.loadMenus) {
             store.dispatch('app/updateLoadMenus')
             loadMenus(routeModuleName, next, to);
-        }
+        } 
         if (to.matched.length === 0) {
             next('/404') // 判断此跳转路由的来源路由是否存在，存在的情况跳转到来源路由，否则跳转到404页面
         }
@@ -57,7 +59,8 @@ export const loadMenus = async (module: any, next: any, to: any) => {
     let routerList = permissions.screenRouter(AsyncRoutes, module);
     routerList.forEach((item: any) => {
         router.addRoute(item)
-    })
+    });
+    // router.removeRoute('prizeindex')
     let setRouterList = routerList.map((item: any) => {
         return {
             path: item.path,
@@ -66,6 +69,12 @@ export const loadMenus = async (module: any, next: any, to: any) => {
             children: item.children
         }
     })
+    console.log(setRouterList)
     store.commit('app/SETROUTERLIST', setRouterList);
+    // next();
+    next({
+        ...to,
+        replace: true
+    })
     return routerList;
 }

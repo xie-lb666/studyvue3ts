@@ -1,16 +1,27 @@
 
 <template>
   <el-container style="height: 650px">
-    <el-aside :width="asideWidth" style="background-color: rgb(238, 241, 246)">
-      <h1>标题 <i class="el-icon-arrow-left" @click="closeAside"></i></h1>
+    <el-aside :width="asideWidth" style="background-color: rgb(238, 241, 246);overflow-x:hidden">
+      <h1 class="headtag">
+        标题
+        <i
+          :class="{ 'el-icon-s-fold': !collapse, 'el-icon-s-unfold': collapse }"
+          @click="closeAside"
+        ></i>
+      </h1>
       <el-menu
+        background-color="rgb(238, 241, 246)"
+        text-color="#000"
+        active-text-color="#ffd04b"
         router
         :collapse="collapse"
+        :unique-opened="true"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
+        style="border:none;"
       >
-        <el-submenu index="1" v-for="(item, i) in routerList" :key="i">
+        <el-submenu :index="i" v-for="(item, i) in routerList" :key="i">
           <template #title
             ><i :class="item.icon"></i><span>{{ item.name }}</span></template
           >
@@ -61,7 +72,7 @@ export default defineComponent({
     };
     const handleOpen = (key, keyPath) => {};
     const handleClose = (key, keyPath) => {};
-    return {  closeAside, asideWidth, collapse, handleOpen, handleClose };
+    return { closeAside, asideWidth, collapse, handleOpen, handleClose };
   },
 });
 </script>
@@ -85,5 +96,13 @@ export default defineComponent({
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 240px;
   min-height: 400px;
+}
+</style>
+<style lang="scss" scoped>
+.headtag{
+  padding:0 20px ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

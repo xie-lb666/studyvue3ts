@@ -5,7 +5,7 @@ const routes = {
     component: Layout,
     redirect: '/common/index',
     meta: {
-        icon: 'home',
+        icon: 'el-icon-medal',
         breadcrumb: true,
         title: '常用',
         affix: true,
@@ -17,7 +17,7 @@ const routes = {
         name: "commonindex",
         component: () => import('../../views/common/common.vue'),
         meta: {
-            icon: 'home',
+            icon: 'el-icon-medal',
             breadcrumb: true,
             title: '浏览器',
             affix: true,

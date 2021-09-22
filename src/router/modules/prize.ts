@@ -5,7 +5,7 @@ const routes = {
     component: Layout,
     redirect: '/prize/index',
     meta: {
-        icon: 'home',
+        icon: 'el-icon-medal',
         breadcrumb: true,
         title: '抽奖',
         affix: true,
@@ -17,7 +17,7 @@ const routes = {
         name: "prizeindex",
         component: () => import('../../views/LuckyDraw/LuckyDraw.vue'),
         meta: {
-            icon: 'home',
+            icon: 'el-icon-medal',
             breadcrumb: true,
             title: '抽奖',
             affix: true,
@@ -28,7 +28,7 @@ const routes = {
         name: "prizeedit",
         component: () => import('../../views/LuckyEdit/LuckyEdit.vue'),
         meta: {
-            icon: 'home',
+            icon: 'el-icon-medal',
             breadcrumb: true,
             title: '抽奖设置',
             affix: true,
